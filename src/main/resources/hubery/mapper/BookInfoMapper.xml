@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hubery.mapper.BookInfoMapper" >
+  <resultMap id="BaseResultMap" type="hubery.pojo.BookInfo" >
+    <id column="bookid" property="bookid" jdbcType="INTEGER" />
+    <result column="bookcode" property="bookcode" jdbcType="VARCHAR" />
+    <result column="bookname" property="bookname" jdbcType="VARCHAR" />
+    <result column="booktype" property="booktype" jdbcType="INTEGER" />
+    <result column="bookauthor" property="bookauthor" jdbcType="VARCHAR" />
+    <result column="publishpress" property="publishpress" jdbcType="VARCHAR" />
+    <result column="publishdate" property="publishdate" jdbcType="DATE" />
+    <result column="isborrow" property="isborrow" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bookid, bookcode, bookname, booktype, bookauthor, publishpress, publishdate, isborrow
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hubery.pojo.BookInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book_info
+    where bookid = #{bookid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book_info
+    where bookid = #{bookid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="hubery.pojo.BookInfoExample" >
+    delete from book_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hubery.pojo.BookInfo" >
+    insert into book_info (bookid, bookcode, bookname, 
+      booktype, bookauthor, publishpress, 
+      publishdate, isborrow)
+    values (#{bookid,jdbcType=INTEGER}, #{bookcode,jdbcType=VARCHAR}, #{bookname,jdbcType=VARCHAR}, 
+      #{booktype,jdbcType=INTEGER}, #{bookauthor,jdbcType=VARCHAR}, #{publishpress,jdbcType=VARCHAR}, 
+      #{publishdate,jdbcType=DATE}, #{isborrow,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="hubery.pojo.BookInfo" >
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookid != null" >
+        bookid,
+      </if>
+      <if test="bookcode != null" >
+        bookcode,
+      </if>
+      <if test="bookname != null" >
+        bookname,
+      </if>
+      <if test="booktype != null" >
+        booktype,
+      </if>
+      <if test="bookauthor != null" >
+        bookauthor,
+      </if>
+      <if test="publishpress != null" >
+        publishpress,
+      </if>
+      <if test="publishdate != null" >
+        publishdate,
+      </if>
+      <if test="isborrow != null" >
+        isborrow,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookid != null" >
+        #{bookid,jdbcType=INTEGER},
+      </if>
+      <if test="bookcode != null" >
+        #{bookcode,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null" >
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="booktype != null" >
+        #{booktype,jdbcType=INTEGER},
+      </if>
+      <if test="bookauthor != null" >
+        #{bookauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="publishpress != null" >
+        #{publishpress,jdbcType=VARCHAR},
+      </if>
+      <if test="publishdate != null" >
+        #{publishdate,jdbcType=DATE},
+      </if>
+      <if test="isborrow != null" >
+        #{isborrow,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hubery.pojo.BookInfoExample" resultType="java.lang.Integer" >
+    select count(*) from book_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update book_info
+    <set >
+      <if test="record.bookid != null" >
+        bookid = #{record.bookid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookcode != null" >
+        bookcode = #{record.bookcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookname != null" >
+        bookname = #{record.bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.booktype != null" >
+        booktype = #{record.booktype,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookauthor != null" >
+        bookauthor = #{record.bookauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishpress != null" >
+        publishpress = #{record.publishpress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishdate != null" >
+        publishdate = #{record.publishdate,jdbcType=DATE},
+      </if>
+      <if test="record.isborrow != null" >
+        isborrow = #{record.isborrow,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update book_info
+    set bookid = #{record.bookid,jdbcType=INTEGER},
+      bookcode = #{record.bookcode,jdbcType=VARCHAR},
+      bookname = #{record.bookname,jdbcType=VARCHAR},
+      booktype = #{record.booktype,jdbcType=INTEGER},
+      bookauthor = #{record.bookauthor,jdbcType=VARCHAR},
+      publishpress = #{record.publishpress,jdbcType=VARCHAR},
+      publishdate = #{record.publishdate,jdbcType=DATE},
+      isborrow = #{record.isborrow,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="hubery.pojo.BookInfo" >
+    update book_info
+    <set >
+      <if test="bookcode != null" >
+        bookcode = #{bookcode,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null" >
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="booktype != null" >
+        booktype = #{booktype,jdbcType=INTEGER},
+      </if>
+      <if test="bookauthor != null" >
+        bookauthor = #{bookauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="publishpress != null" >
+        publishpress = #{publishpress,jdbcType=VARCHAR},
+      </if>
+      <if test="publishdate != null" >
+        publishdate = #{publishdate,jdbcType=DATE},
+      </if>
+      <if test="isborrow != null" >
+        isborrow = #{isborrow,jdbcType=INTEGER},
+      </if>
+    </set>
+    where bookid = #{bookid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hubery.pojo.BookInfo" >
+    update book_info
+    set bookcode = #{bookcode,jdbcType=VARCHAR},
+      bookname = #{bookname,jdbcType=VARCHAR},
+      booktype = #{booktype,jdbcType=INTEGER},
+      bookauthor = #{bookauthor,jdbcType=VARCHAR},
+      publishpress = #{publishpress,jdbcType=VARCHAR},
+      publishdate = #{publishdate,jdbcType=DATE},
+      isborrow = #{isborrow,jdbcType=INTEGER}
+    where bookid = #{bookid,jdbcType=INTEGER}
+  </update>
+</mapper>
